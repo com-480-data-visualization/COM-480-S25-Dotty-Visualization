@@ -1,10 +1,12 @@
-# Project of Data Visualization (COM-480)
+# Dotty (Scala 3) Compiler Visualization Report
+
+Project of Data Visualization (COM-480 S25)
 
 | Student's name | SCIPER |
 | -------------- | ------ |
-| | |
-| | |
-| | |
+| Nguyen Phan | ??? |
+| Yaoyu Zhao | 319801 |
+| Yingtian Tang | ??? |
 
 [Milestone 1](#milestone-1) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
 
