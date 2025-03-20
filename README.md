@@ -66,6 +66,10 @@ https://github.com/scala/scala3/graphs/contributors
 
 This is a basic overview of the contributors to the repository. Not showing much information due to the number of commits.
 
+Some simple pre-processing to extract some interesting initial data:
+- Commits in the last year: `./some-sample-data/commits-last-year.csv`. Hash, author, time and commit head messages.
+- Commits for each Scala source file: `./some-sample-data/commits-by-file.csv`. Number of commits, and the information of the last commit.
+
 ### Related work
 
 <!-- > - What others have already done with the data?
