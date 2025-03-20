@@ -4,7 +4,7 @@ Project of Data Visualization (COM-480 S25)
 
 | Student's name | SCIPER |
 | -------------- | ------ |
-| Nguyen Phan | ??? |
+| Cao Nguyen Pham | 354716 |
 | Yaoyu Zhao | 319801 |
 | Yingtian Tang | ??? |
 
