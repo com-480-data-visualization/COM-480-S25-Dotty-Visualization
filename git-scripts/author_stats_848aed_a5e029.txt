@@ -1,0 +1,176 @@
+Martin Odersky              : 1646
+Nicolas Stucki              : 983
+Dale Wijnand                : 545
+Hamza Remmal                : 309
+Jamie Thompson              : 266
+Sébastien Doeraene          : 256
+Guillaume Martres           : 216
+Fengyun Liu                 : 185
+Paweł Marks                 : 179
+noti0na1                    : 141
+Wojciech Mazur              : 125
+Eugene Flesselle            : 124
+Yichen Xu                   : 123
+Kacper Korban               : 105
+Szymon Rodziewicz           : 103
+Matt Bovel                  : 94
+Jan Chyb                    : 87
+Som Snytt                   : 87
+Hamza REMMAL                : 82
+Tomasz Godzik               : 79
+Chris Kipp                  : 74
+Paul Coral                  : 67
+Quentin Bernet              : 65
+EnzeXing                    : 47
+Seth Tisue                  : 47
+Adrien Piquerez             : 46
+Katarzyna Marek             : 41
+dependabot[bot]             : 35
+David Hua                   : 34
+Ondřej Lhoták               : 32
+Rikito Taniguchi            : 32
+Simon R                     : 32
+Michał Pałka                : 29
+aherlihy                    : 29
+Jędrzej Rochala             : 28
+kasiaMarek                  : 27
+Oliver Bračevac             : 25
+i10416                      : 25
+rochala                     : 23
+Lucas                       : 21
+Florian3k                   : 19
+Lucas Leblanc               : 19
+ysthakur                    : 19
+Anatolii Kmetiuk            : 18
+HarrisL2                    : 18
+Mikołaj Fornal              : 16
+Natsu Kagami                : 16
+Carl                        : 15
+Jakub Ciesluk               : 15
+Julien Richard-Foy          : 14
+Lukas Rytz                  : 12
+Chris Birchall              : 10
+Piotr Chabelski             : 10
+Guillaume Raffin            : 9
+Timothée Andres             : 9
+Kenji Yoshida               : 8
+Ondrej Lhotak               : 8
+adpi2                       : 8
+anna herlihy                : 8
+ghostbuster91               : 8
+Decel                       : 7
+Pascal Weisenburger         : 7
+Yilin Wei                   : 7
+Joel Wilsson                : 6
+Lorenzo Gabriele            : 6
+Yuito Murase                : 6
+Eugene Yokota               : 5
+Filip Zybała                : 5
+nizhikov                    : 5
+Aleksander Rainko           : 4
+Dan13llljws                 : 4
+João Ferreira               : 4
+Michael Pollmeier           : 4
+110416                      : 3
+Aviv Keller                 : 3
+Bersier                     : 3
+David                       : 3
+Derek Wickern               : 3
+Lucas Nouguier              : 3
+Lucy Martin                 : 3
+Martin Duhem                : 3
+OlegYch                     : 3
+Oliver Bracevac             : 3
+Oron Port                   : 3
+Roman Janusz                : 3
+Stephane Bersier            : 3
+philippus                   : 3
+Alex                        : 2
+Arman Bilge                 : 2
+Arnout Engelen              : 2
+Bjorn Regnell               : 2
+Dmitrii Naumenko            : 2
+Friendseeker                : 2
+Georgi Krastev              : 2
+Jakub Cieśluk               : 2
+Jan-Pieter van den Heuvel   : 2
+João Costa                  : 2
+Michael Pilquist            : 2
+Philippus                   : 2
+Raphael Jolly               : 2
+Taro L. Saito               : 2
+Vasil Vasilev               : 2
+Yadu Krishnan               : 2
+adampauls                   : 2
+danecek                     : 2
+q-ata                       : 2
+s.bazarsadaev               : 2
+willerf                     : 2
+yoshinorin                  : 2
+Adam Dąbrowski              : 1
+Alden Torres                : 1
+Alec Theriault              : 1
+Aleksander Boruch-Gruszecki : 1
+Aleksey Troitskiy           : 1
+Alexander                   : 1
+Ausmarton Zarino Fernandes  : 1
+Chris Pado                  : 1
+Daisy Li                    : 1
+Daniel Esik                 : 1
+Daniel Thoma                : 1
+Fabián Heredia Montiel      : 1
+Felix Herrmann              : 1
+Flavio Brasil               : 1
+François Monniot           : 1
+He-Pin(kerr)                : 1
+Jentsch                     : 1
+Jisoo Park                  : 1
+John Duffell                : 1
+John M. Higgins             : 1
+Justin Reardon              : 1
+Kai                         : 1
+Kasper Kondzielski          : 1
+Kavin Satheeskumar          : 1
+Kisaragi                    : 1
+Lunfu Zhong                 : 1
+LydiaSkuse                  : 1
+Martin Kucera               : 1
+Martin Kučera               : 1
+Mathias                     : 1
+Matthew Rooney              : 1
+Matthias Kurz               : 1
+Mehdi Alaoui                : 1
+Michel Charpentier          : 1
+Mohammad Yousuf Minhaj Zia  : 1
+Nafer Sanabria              : 1
+Nicolas Almerge             : 1
+Nikita Gazarov              : 1
+Niklas Fiekas               : 1
+Ola Flisbäck                : 1
+Oleg Zenzin                 : 1
+Olga Mazhara                : 1
+Ondra Pelech                : 1
+Philippus Baalman           : 1
+Preveen P                   : 1
+Robert Stoll                : 1
+Rocco Mathijn Andela        : 1
+Rui Chen                    : 1
+Shardul Chiplunkar          : 1
+Stefan Wachter              : 1
+Szymon R                    : 1
+Tim Spence                  : 1
+Vadim Chelyshov             : 1
+Valentin Schneeberger       : 1
+Yoonjae Jeon                : 1
+brandonspark                : 1
+crunchyfrog                 : 1
+eugene yokota               : 1
+fan-tom                     : 1
+friendseeker                : 1
+github-actions[bot]         : 1
+liang3zy22                  : 1
+philwalk                    : 1
+slim                        : 1
+tgodzik                     : 1
+xiaoshihou                  : 1
+Łukasz Wroński              : 1
