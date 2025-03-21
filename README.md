@@ -6,7 +6,7 @@ Project of Data Visualization (COM-480 S25)
 | -------------- | ------ |
 | Cao Nguyen Pham | 354716 |
 | Yaoyu Zhao | 319801 |
-| Yingtian Tang | ??? |
+| Yingtian Tang | 368634 |
 
 [Milestone 1](#milestone-1) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
 
