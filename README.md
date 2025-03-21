@@ -125,6 +125,32 @@ aherlihy              : 26
 ...
 ```
 
+The script `git-scripts/git_author_file_stats.py` collects the number of modules edited by each author. We can see that the two statistics are correlated but still different. Some authors focus more on specific modules.
+
+```
+odersky               : 780
+Hamza Remmal          : 195
+Dale Wijnand          : 183
+Jamie Thompson        : 181
+Nicolas Stucki        : 178
+Hamza REMMAL          : 154
+Wojciech Mazur        : 131
+Adrien Piquerez       : 121
+noti0na1              : 118
+Som Snytt             : 117
+Matt Bovel            : 114
+Jan Chyb              : 89
+Eugene Flesselle      : 75
+Kacper Korban         : 74
+Jędrzej Rochala       : 51
+Sébastien Doeraene    : 51
+EnzeXing              : 47
+Guillaume Martres     : 43
+Yichen Xu             : 34
+aherlihy              : 28
+...
+```
+
 Professor Martin Odersky leads significantly in commit contributions, way ahead of the other contributors.
 
 ### Related work

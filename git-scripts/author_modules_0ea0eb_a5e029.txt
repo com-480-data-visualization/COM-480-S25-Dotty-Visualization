@@ -1,0 +1,100 @@
+odersky               : 780
+Hamza Remmal          : 195
+Dale Wijnand          : 183
+Jamie Thompson        : 181
+Nicolas Stucki        : 178
+Hamza REMMAL          : 154
+Wojciech Mazur        : 131
+Adrien Piquerez       : 121
+noti0na1              : 118
+Som Snytt             : 117
+Matt Bovel            : 114
+Jan Chyb              : 89
+Eugene Flesselle      : 75
+Kacper Korban         : 74
+Jędrzej Rochala       : 51
+Sébastien Doeraene    : 51
+EnzeXing              : 47
+Guillaume Martres     : 43
+Yichen Xu             : 34
+aherlihy              : 28
+HarrisL2              : 19
+Seth Tisue            : 19
+Yuito Murase          : 19
+som-snytt             : 15
+kenji yoshida         : 14
+Oliver Bračevac       : 11
+Joel Wilsson          : 10
+Mikołaj Fornal        : 10
+kasiaMarek            : 10
+Fengyun Liu           : 9
+Eugene Yokota         : 8
+Lucy Martin           : 8
+dependabot[bot]       : 8
+Florian3k             : 7
+Georgi Krastev        : 7
+Lucas Nouguier        : 7
+Quentin Bernet        : 7
+Alden Torres          : 6
+Katarzyna Marek       : 6
+Lukas Rytz            : 6
+Natsu Kagami          : 6
+Aleksander Rainko     : 5
+Filip Zybała          : 5
+Friendseeker          : 5
+Martin Duhem          : 5
+Nafer Sanabria        : 5
+Rocco Mathijn Andela  : 5
+Roman Janusz          : 5
+rochala               : 5
+Alexander             : 4
+Aviv Keller           : 4
+Daisy Li              : 4
+David Hua             : 4
+João Ferreira         : 4
+Pascal Weisenburger   : 4
+Paweł Marks           : 4
+Tomasz Godzik         : 4
+Felix Herrmann        : 3
+Oliver Bracevac       : 3
+Ondrej Lhotak         : 3
+Piotr Chabelski       : 3
+Raphael Jolly         : 3
+fan-tom               : 3
+philippus             : 3
+tgodzik               : 3
+Alec Theriault        : 2
+Jisoo Park            : 2
+Kasper Kondzielski    : 2
+Kavin Satheeskumar    : 2
+Lunfu Zhong           : 2
+Michał Pałka          : 2
+Rui Chen              : 2
+adpi2                 : 2
+friendseeker          : 2
+willerf               : 2
+xuwei-k               : 2
+Arnout Engelen        : 1
+Chris Pado            : 1
+Dan13llljws           : 1
+Daniel Thoma          : 1
+Derek Wickern         : 1
+Dmitrii Naumenko      : 1
+Jentsch               : 1
+Lorenzo Gabriele      : 1
+Mathias               : 1
+Michel Charpentier    : 1
+Niklas Fiekas         : 1
+Ola Flisbäck          : 1
+Oleg Zenzin           : 1
+OlegYch               : 1
+Ondřej Lhoták         : 1
+Stephane Bersier      : 1
+Taro L. Saito         : 1
+Vadim Chelyshov       : 1
+Valentin Schneeberger : 1
+Yoonjae Jeon          : 1
+anna herlihy          : 1
+crunchyfrog           : 1
+philwalk              : 1
+xiaoshihou            : 1
