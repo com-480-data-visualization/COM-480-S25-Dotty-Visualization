@@ -173,6 +173,8 @@ Additionally, insights from monthly reports on the Rust compiler development ([R
 
 **10% of the final grade**
 
+See [Milestone 2](./Milestone-2.md).
+
 
 ## Milestone 3 (30th May, 5pm)
 
