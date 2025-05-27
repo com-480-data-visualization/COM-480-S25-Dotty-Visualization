@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dotty Compiler (Scala3)</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="contributors.css">
 </head>
 
 <body>
@@ -19,7 +20,7 @@
   <div class="tabs">
     <button class="tab active" data-tab="overview">Overview</button>
     <button class="tab" data-tab="panel1">Files and Dependencies</button>
-    <button class="tab" data-tab="panel2">Panel 2</button>
+    <button class="tab" data-tab="panel2">Contributors</button>
     <button class="tab" data-tab="panel3">Panel 3</button>
   </div>
 
@@ -55,23 +56,65 @@
         <div class="tooltip" style="display: none;"></div>
       </div>
     </div>
+  </div>
 
-    <div id="panel2" class="tab-content">
-      <div class="card">
-        <h2>Visualization Panel 2</h2>
-        <p>Panel 2 content goes here.</p>
+  <div id="panel2" class="tab-content">
+    <div class="card">
+      <h2>Contributors Activity Over Time</h2>
+      <div class="contributors-container">
+        <div class="chart-section">
+          <div class="chart-container">
+            <canvas id="contributorsChart"></canvas>
+          </div>
+          
+          <!-- Time Range Slider -->
+          <div class="time-slider-container">
+            <div class="time-slider-wrapper">
+              <input type="range" id="startTimeSlider" class="time-slider" min="0" max="100" value="0">
+              <input type="range" id="endTimeSlider" class="time-slider" min="0" max="100" value="100">
+            </div>
+            <div class="time-labels">
+              <span id="startTimeLabel">Start</span>
+              <span id="endTimeLabel">End</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Contributors Panel -->
+        <div class="contributors-panel">
+          <div class="metric-toggle">
+            <label class="switch">
+              <input type="checkbox" id="metricToggle">
+              <span class="slider round"></span>
+            </label>
+            <span class="metric-label">
+              <span id="currentMetric">Commits</span>
+            </span>
+          </div>
+          
+          <div class="contributor-controls">
+            <button class="control-btn" id="selectAllBtn">Select All</button>
+            <button class="control-btn" id="deselectAllBtn">Deselect All</button>
+          </div>
+          
+          <div class="contributors-list" id="contributorsList">
+            <!-- Contributors will be populated by JavaScript -->
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <div id="panel3" class="tab-content">
-      <div class="card">
-        <h2>Visualization Panel 3</h2>
-        <p>Panel 3 content goes here.</p>
-      </div>
+  <div id="panel3" class="tab-content">
+    <div class="card">
+      <h2>Visualization Panel 3</h2>
+      <p>Panel 3 content goes here.</p>
     </div>
+  </div>
 
-    <script type="module" src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script type="module" src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
 
 </html>
