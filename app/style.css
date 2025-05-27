@@ -69,6 +69,12 @@ body {
     align-items: center;
   }
 
+  .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
   canvas {
     border: 1px solid #444;
     background-color: #000;

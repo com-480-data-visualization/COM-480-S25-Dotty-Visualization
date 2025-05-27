@@ -1,6 +1,34 @@
 import * as d3 from "d3";
 import * as data from "./data";
 
+export class ScalaFileMap {
+    constructor(rootid) {
+        this.version = "3.6.4";
+        this.graph = new ForceDirectedGraph(rootid, data.references[this.version]);
+        this.versionSelector = d3.select(`#${rootid} .scala-version`).node();
+
+        // setup scala versions
+        this.versionSelector.innerHTML =
+            Object.keys(data.references).map(k => `<option value="${k}">${k}</option>`).join("\n");
+
+        this.setupEventListeners()
+    }
+
+    setupEventListeners() {
+        console.log(this.versionSelector);
+        this.versionSelector.addEventListener("change", e => this.handleVersionChange(e.target.value));
+    }
+
+    draw() {
+        this.graph.render(data.references[this.version]);
+    }
+
+    handleVersionChange(newVersion) {
+        this.version = newVersion;
+        this.draw();
+    }
+}
+
 export class ForceDirectedGraph {
     constructor(rootid, startingData) {
         this.canvas = d3.select(`#${rootid} .graph`);
@@ -23,7 +51,7 @@ export class ForceDirectedGraph {
             .force("center", d3.forceCenter(this.width / 2, this.height / 2))
 
         this.setupEventListeners();
-        this.render(startingData)
+        // this.render(startingData)
     }
 
     setupEventListeners() {
@@ -49,6 +77,11 @@ export class ForceDirectedGraph {
     }
 
     render(data) {
+        const rect = this.canvas.node().getBoundingClientRect();
+        this.width = rect.width;
+        this.height = rect.height;
+        console.log(`${this.width} ${this.height}`)
+
         // Create nodes and links
         const nodeMap = new Map();
         const links = [];
