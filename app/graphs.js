@@ -3,29 +3,110 @@ import * as data from "./data";
 
 export class ScalaFileMap {
     constructor(rootid) {
+        this.buildPathTree();
         this.version = "3.6.4";
         this.graph = new ForceDirectedGraph(rootid, data.references[this.version]);
         this.versionSelector = d3.select(`#${rootid} .scala-version`).node();
+        this.pathTree = d3.select(`#${rootid} .path-tree`).node();
 
         // setup scala versions
         this.versionSelector.innerHTML =
             Object.keys(data.references).map(k => `<option value="${k}">${k}</option>`).join("\n");
+        this.renderPathTree();
 
         this.setupEventListeners()
     }
 
     setupEventListeners() {
-        console.log(this.versionSelector);
         this.versionSelector.addEventListener("change", e => this.handleVersionChange(e.target.value));
+        [...this.pathTree.getElementsByTagName("input")].forEach(elem => elem.addEventListener("change", e => {
+            this.handleChangedElem(e.target);
+            this.draw();
+        }));
     }
 
     draw() {
-        this.graph.render(data.references[this.version]);
+        this.graph.render(
+            this.filteredDataFromPathTree(data.references[this.version])
+        );
     }
 
     handleVersionChange(newVersion) {
         this.version = newVersion;
         this.draw();
+    }
+
+    filteredDataFromPathTree(data) {
+        const filterPath = path => {
+            const parts = path.split("/");
+            let current = this.paths;
+            for (let i = 0; i + 1 < parts.length; ++i) {
+                if (!current) return false;
+                current = current.children[parts[i]];
+            }
+            return current.elem.checked;
+        };
+        return data.filter(({ from, to }) => filterPath(from) && filterPath(to))
+    }
+
+    renderPathTree() {
+        const renderNode = (node, depth) => {
+            const id = `path-tree-${node.name}-${depth}`;
+            const input = `<input type="checkbox" id="${id}" value="${node.name}" style="margin-left: ${depth}em;" checked>`;
+            const label = `<label for="${id}" style="font-family: monospace;">${node.name}</label>`;
+            return `<div>${input}${label}</div>\n` + Object.values(node.children).map(c => renderNode(c, depth + 1)).join("\n");
+        };
+        this.pathTree.innerHTML = renderNode(this.paths, 0);
+        const assignNode = (node, depth) => {
+            const id = `path-tree-${node.name}-${depth}`;
+            const elem = document.getElementById(id);
+            node.elem = elem;
+            elem.treeNode = node;
+            Object.values(node.children).forEach(n => assignNode(n, depth + 1));
+        };
+        assignNode(this.paths, 0);
+    }
+
+    handleChangedElem(elem) {
+        // propagate change to all children
+        const propagate = node => {
+            node.elem.checked = elem.checked;
+            node.elem.indeterminate = false;
+            Object.values(node.children).forEach(propagate);
+        };
+        propagate(elem.treeNode);
+        const hasChecked = node => (node.elem.checked || Object.values(node.children).some(hasChecked));
+        // signal change to all parents
+        const signal = node => {
+            if (node === null) return;
+            const children = Object.values(node.children);
+            // node.elem.checked = children.length === 0 ? node.elem.checked : children.some(c => c.elem.checked);
+            node.elem.indeterminate = node.elem.checked && children.some(hasChecked);
+            signal(node.parent);
+        }
+        signal(elem.treeNode.parent);
+    }
+
+    // Build a list of paths to form a path tree
+    buildPathTree() {
+        const makeNode = (parent, part) => ({ name: part, children: {}, parent: parent });
+        const root = makeNode(null, ".");
+        const handlePath = path => {
+            if (!path.startsWith("compiler")) return;
+            const parts = path.split("/");
+            let current = root;
+            for (let i = 0; i + 1 < parts.length; ++i) {
+                current.children[parts[i]] ??= makeNode(current, parts[i]);
+                current = current.children[parts[i]];
+            }
+        };
+        for (const ref of Object.values(data.references)) {
+            for (const { from, to } of ref) {
+                handlePath(from);
+                handlePath(to);
+            }
+        }
+        this.paths = root;
     }
 }
 

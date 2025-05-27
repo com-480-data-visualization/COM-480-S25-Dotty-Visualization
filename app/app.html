@@ -31,7 +31,7 @@
 
   <div id="panel1" class="tab-content">
     <div class="card">
-      <h2>Visualization Panel 1</h2>
+      <h2>Source Files and Dependencies, over time</h2>
       <div class="row">
         <div class="container">
           <canvas class="graph" width="1200" height="800"></canvas>
@@ -39,34 +39,39 @@
             🖱️ Drag nodes to move them • 🔍 Scroll to zoom • 📄 Hover for full path details
           </div>
         </div>
-        <div class="container" style="margin-left: 1em;">
+        <div class="container" style="margin-left: 1em; align-items: start;">
           <div>
             <label for="panel1-scala-version">Scala Version</label>
-            <select id="panel1-scala-version" class="scala-version" style="margin-left: 1em;"></select>
+            <select id="panel1-scala-version" class="scala-version" style="margin-left: 1em"></select>
+          </div>
+          <div style="margin-top: 1em">
+            <label for="panel1-folders">Source Directories</label>
+            <div id="panel1-folders" class="path-tree">
+
+            </div>
           </div>
         </div>
+
+        <div class="tooltip" style="display: none;"></div>
       </div>
-
-      <div class="tooltip" style="display: none;"></div>
     </div>
-  </div>
 
-  <div id="panel2" class="tab-content">
-    <div class="card">
-      <h2>Visualization Panel 2</h2>
-      <p>Panel 2 content goes here.</p>
+    <div id="panel2" class="tab-content">
+      <div class="card">
+        <h2>Visualization Panel 2</h2>
+        <p>Panel 2 content goes here.</p>
+      </div>
     </div>
-  </div>
 
-  <div id="panel3" class="tab-content">
-    <div class="card">
-      <h2>Visualization Panel 3</h2>
-      <p>Panel 3 content goes here.</p>
+    <div id="panel3" class="tab-content">
+      <div class="card">
+        <h2>Visualization Panel 3</h2>
+        <p>Panel 3 content goes here.</p>
+      </div>
     </div>
-  </div>
 
-  <script type="module" src="script.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="module" src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
 
 </html>
