@@ -1,63 +1,114 @@
 body {
-    margin: 0;
-    font-family: sans-serif;
-    background-color: white;
-    color: #111;
-  }
-  
-  .header {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: white;
+  color: #111;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.logo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-left: 1rem;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  margin: 1rem 2rem;
+}
+
+.tab {
+  margin-right: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 1rem;
+}
+
+.tab.active {
+  border-bottom: 2px solid black;
+  font-weight: bold;
+}
+
+.tab-content {
+  padding: 2rem;
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.card {
+  background-color: #f9f9f9;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#panel1 {
+  .container {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-    border-bottom: 1px solid #ccc;
   }
-  
-  .logo {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    object-fit: cover;
+
+  canvas {
+    border: 1px solid #444;
+    background-color: #000;
+    cursor: grab;
   }
-  
-  .title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-left: 1rem;
+
+  canvas:active {
+    cursor: grabbing;
   }
-  
-  .tabs {
+
+  .controls {
+    margin-bottom: 20px;
     display: flex;
-    border-bottom: 1px solid #ccc;
-    margin: 1rem 2rem;
+    gap: 20px;
+    align-items: center;
   }
-  
-  .tab {
-    margin-right: 1rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    border: none;
-    background: none;
-    font-size: 1rem;
+
+  .tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    pointer-events: none;
+    border: 1px solid #666;
+    max-width: 400px;
+    word-wrap: break-word;
+    z-index: 1000;
   }
-  
-  .tab.active {
-    border-bottom: 2px solid black;
-    font-weight: bold;
+
+  .info {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #ccc;
   }
-  
-  .tab-content {
-    padding: 2rem;
-    display: none;
+
+  .instructions {
+    margin-top: 10px;
+    font-size: 12px;
+    text-align: center;
   }
-  
-  .tab-content.active {
-    display: block;
-  }
-  
-  .card {
-    background-color: #f9f9f9;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
+}

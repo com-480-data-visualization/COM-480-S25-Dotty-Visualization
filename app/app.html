@@ -18,7 +18,7 @@
 
   <div class="tabs">
     <button class="tab active" data-tab="overview">Overview</button>
-    <button class="tab" data-tab="panel1">Panel 1</button>
+    <button class="tab" data-tab="panel1">Files and Dependencies</button>
     <button class="tab" data-tab="panel2">Panel 2</button>
     <button class="tab" data-tab="panel3">Panel 3</button>
   </div>
@@ -32,7 +32,14 @@
   <div id="panel1" class="tab-content">
     <div class="card">
       <h2>Visualization Panel 1</h2>
-      <p>Panel 1 content goes here.</p>
+      <div class="container">
+        <canvas class="graph" width="1200" height="800"></canvas>
+        <div class="instructions">
+          🖱️ Drag nodes to move them • 🔍 Scroll to zoom • 📄 Hover for full path details
+        </div>
+      </div>
+
+      <div class="tooltip" style="display: none;"></div>
     </div>
   </div>
 
@@ -51,6 +58,11 @@
   </div>
 
   <script src="script.js"></script>
+  <script type="module">
+    import { ForceDirectedGraph } from "./graphs";
+    import { references } from "./data";
+    const force = new ForceDirectedGraph("panel1", references["3.6.4"]);
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
 
