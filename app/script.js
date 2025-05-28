@@ -74,6 +74,7 @@ async function initializeContributorsChart() {
     setupMetricToggle();
     setupContributorControls();
     populateContributorsList();
+    updateChartData(); // Initial chart render after all setup is complete
     
   } catch (error) {
     console.error('Error loading contributors data:', error);
@@ -159,8 +160,6 @@ function setupContributorsChart() {
       }
     }
   });
-  
-  updateChartData();
 }
 
 function setupTimeSliders() {
