@@ -52,11 +52,17 @@ export class ScalaFileMap {
     renderPathTree() {
         const renderNode = (node, depth) => {
             const id = `path-tree-${node.name}-${depth}`;
-            const input = `<input type="checkbox" id="${id}" value="${node.name}" style="margin-left: ${depth}em;" checked>`;
-            const label = `<label for="${id}" style="font-family: monospace;">${node.name}</label>`;
-            return `<div>${input}${label}</div>\n` + Object.values(node.children).map(c => renderNode(c, depth + 1)).join("\n");
+            const indentClass = `path-tree-level-${depth}`;
+            const input = `<input type="checkbox" id="${id}" value="${node.name}" checked>`;
+            const icon = `<span class="tree-icon"></span>`;
+            const label = `<label for="${id}">${node.name}</label>`;
+            
+            return `<div class="path-tree-item ${indentClass}" data-depth="${depth}">${input}${icon}${label}</div>\n` + 
+                   Object.values(node.children).map(c => renderNode(c, depth + 1)).join("\n");
         };
+        
         this.pathTree.innerHTML = renderNode(this.paths, 0);
+        
         const assignNode = (node, depth) => {
             const id = `path-tree-${node.name}-${depth}`;
             const elem = document.getElementById(id);
@@ -100,12 +106,14 @@ export class ScalaFileMap {
                 current = current.children[parts[i]];
             }
         };
+        
         for (const ref of Object.values(data.references)) {
             for (const { from, to } of ref) {
                 handlePath(from);
                 handlePath(to);
             }
         }
+        
         this.paths = root;
     }
 }

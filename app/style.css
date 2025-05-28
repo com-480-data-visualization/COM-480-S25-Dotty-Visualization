@@ -72,7 +72,230 @@ body {
   .row {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
+  }
+
+  /* Panel1 right side controls styling to match panel2 */
+  .panel1-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 280px;
+    max-width: 320px;
+  }
+
+  .control-section {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+  }
+
+  .control-section label {
+    display: block;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .scala-version {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    background: white;
+    color: #495057;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .scala-version:hover {
+    border-color: #adb5bd;
+  }
+
+  .scala-version:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+    border-color: #2196F3;
+  }
+
+  .path-tree {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    min-height: 150px;
+    padding: 0.5rem;
+    line-height: 1.4;
+  }
+
+  .path-tree-item {
+    display: flex;
     align-items: center;
+    padding: 0.25rem 0;
+    transition: background-color 0.2s ease;
+    border-radius: 3px;
+    margin: 1px 0;
+    position: relative;
+  }
+
+  .path-tree-item:hover {
+    background-color: #f8f9fa;
+  }
+
+  .path-tree-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-left: 1px solid #dee2e6;
+  }
+
+  .path-tree-item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 12px;
+    border-top: 1px solid #dee2e6;
+  }
+
+  .tree-connector {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .tree-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 0.4rem;
+    flex-shrink: 0;
+    text-align: center;
+    line-height: 16px;
+    font-size: 12px;
+  }
+
+  .tree-icon::before {
+    content: '📁';
+  }
+
+  .path-tree input[type="checkbox"] {
+    margin: 0 0.4rem 0 0;
+    cursor: pointer;
+    flex-shrink: 0;
+    transform: scale(0.9);
+  }
+
+  .path-tree label {
+    cursor: pointer;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Segoe UI Mono', 'Roboto Mono', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.8rem;
+    color: #495057;
+    user-select: none;
+    flex: 1;
+    padding: 0.15rem 0.3rem;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+  }
+
+  .path-tree label:hover {
+    background-color: #e9ecef;
+    color: #212529;
+  }
+
+  /* Tree structure indentation with proper connectors */
+  .path-tree .path-tree-level-0 { 
+    padding-left: 0.5rem; 
+  }
+  
+  .path-tree .path-tree-level-1 { 
+    padding-left: 1.5rem; 
+    position: relative;
+  }
+  
+  .path-tree .path-tree-level-2 { 
+    padding-left: 2.5rem; 
+    position: relative;
+  }
+  
+  .path-tree .path-tree-level-3 { 
+    padding-left: 3.5rem; 
+    position: relative;
+  }
+  
+  .path-tree .path-tree-level-4 { 
+    padding-left: 4.5rem; 
+    position: relative;
+  }
+  
+  .path-tree .path-tree-level-5 { 
+    padding-left: 5.5rem; 
+    position: relative;
+  }
+  
+  .path-tree .path-tree-level-6 { 
+    padding-left: 6.5rem; 
+    position: relative;
+  }
+  
+  .path-tree .path-tree-level-7 { 
+    padding-left: 7.5rem; 
+    position: relative;
+  }
+
+  /* Tree lines for visual hierarchy */
+  .path-tree .path-tree-level-1::before { left: 0.7rem; }
+  .path-tree .path-tree-level-2::before { left: 1.7rem; }
+  .path-tree .path-tree-level-3::before { left: 2.7rem; }
+  .path-tree .path-tree-level-4::before { left: 3.7rem; }
+  .path-tree .path-tree-level-5::before { left: 4.7rem; }
+  .path-tree .path-tree-level-6::before { left: 5.7rem; }
+  .path-tree .path-tree-level-7::before { left: 6.7rem; }
+
+  .path-tree .path-tree-level-1::after { left: 0.7rem; width: 0.6rem; }
+  .path-tree .path-tree-level-2::after { left: 1.7rem; width: 0.6rem; }
+  .path-tree .path-tree-level-3::after { left: 2.7rem; width: 0.6rem; }
+  .path-tree .path-tree-level-4::after { left: 3.7rem; width: 0.6rem; }
+  .path-tree .path-tree-level-5::after { left: 4.7rem; width: 0.6rem; }
+  .path-tree .path-tree-level-6::after { left: 5.7rem; width: 0.6rem; }
+  .path-tree .path-tree-level-7::after { left: 6.7rem; width: 0.6rem; }
+
+  /* Root level styling */
+  .path-tree .path-tree-level-0::before,
+  .path-tree .path-tree-level-0::after {
+    display: none;
+  }
+
+  .path-tree .path-tree-level-0 .tree-icon::before {
+    content: '🏠';
+  }
+
+  /* Scrollbar styling for path tree */
+  .path-tree::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .path-tree::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  .path-tree::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+  }
+
+  .path-tree::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
   }
 
   canvas {

@@ -1,7 +1,7 @@
 import { ScalaFileMap } from "./graphs";
 import contributorsUrl from 'url:./contributors_data.json'
 
-const scalaFileMap = new ScalaFileMap("panel1");
+let scalaFileMap = null;
 
 // Contributors chart variables
 let contributorsChart = null;
@@ -27,6 +27,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (target === "overview") {
         fetchGitHubReadme();
       } else if (target === "panel1") {
+        // Initialize ScalaFileMap only when panel1 is first accessed
+        if (!scalaFileMap) {
+          scalaFileMap = new ScalaFileMap("panel1");
+        }
         scalaFileMap.draw();
       } else if (target === "panel2") {
         initializeContributorsChart();
