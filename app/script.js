@@ -284,6 +284,12 @@ function updateChartData() {
         return currentMetric === 'commits' ? point.commits : point.linesChanged;
       });
       
+      // Check if contributor has any activity during the selected period
+      const totalActivity = data.reduce((sum, value) => sum + value, 0);
+      if (totalActivity === 0) {
+        return; // Skip contributors with 0 commits/lines changed during selected period
+      }
+      
       // Calculate cumulative values
       const cumulativeData = [];
       let sum = 0;
