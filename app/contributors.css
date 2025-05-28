@@ -367,6 +367,95 @@ input:checked + .slider:before {
   border-color: #2196F3;
 }
 
+/* Contributor color indicator (used in contributor items) */
+.contributor-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Time range display label */
+#timeRange {
+  font-weight: 500;
+  color: #333;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* Start and end time slider handles (for custom slider implementation) */
+#startHandle,
+#endHandle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #FF9800;
+  border: 2px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+}
+
+#endHandle {
+  background: #4CAF50;
+}
+
+/* Slider wrapper for custom slider implementation */
+.slider-wrapper {
+  position: relative;
+  height: 24px;
+  margin: 10px 0;
+  background: #ddd;
+  border-radius: 12px;
+}
+
+/* Current metric display in toggle */
+#currentMetric {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Error message styling */
+.error-message {
+  color: #dc3545;
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  padding: 1rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+/* Loading state */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: #666;
+  font-style: italic;
+}
+
+/* Chart legend items when displayed separately */
+.chart-legend .legend-item {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.chart-legend .legend-item:hover {
+  opacity: 0.8;
+}
+
+.chart-legend .legend-item.disabled {
+  opacity: 0.5;
+}
+
 /* Responsive design */
 @media (min-width: 1400px) {
   .chart-section {
