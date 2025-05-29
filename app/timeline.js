@@ -280,13 +280,3 @@ export class TimelineVisualization {
         }
     }
 }
-
-export let timelineViz = null;
-
-// Initialize timeline visualization when the DOM is loaded
-document.addEventListener('DOMContentLoaded', function () {
-    // Only initialize if we're on the timeline tab or if the timeline elements exist
-    if (document.getElementById('timelineChart')) {
-        timelineViz = new TimelineVisualization();
-    }
-});

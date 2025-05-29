@@ -1,10 +1,11 @@
 import { ScalaFileMap } from "./graphs";
 import { contributorsData } from "./data";
 import { initializeIssuesChart } from "./issues";
-import * as timeline from "./timeline";
 import { initializeContributorsChart } from "./contributors";
+import { TimelineVisualization } from "./timeline";
 
 let scalaFileMap = null;
+let timeline = null;
 
 document.addEventListener("DOMContentLoaded", () => {
   const tabs = document.querySelectorAll(".tab");
@@ -34,10 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (target === "panel3") {
         initializeIssuesChart();
       } else if (target === "panel4") {
-        if (timeline.timelineViz) {
-          timeline.timelineViz.processTimelineData();
+        if (timeline) {
+          timeline.processTimelineData();
         } else {
-          timeline.timelineViz = new timeline.TimelineVisualization();
+          timeline = new TimelineVisualization();
         }
       }
     });
