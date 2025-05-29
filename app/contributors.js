@@ -1,3 +1,5 @@
+import { contributorsData } from "./data";
+
 /**
  * Mock data generator for demonstration purposes
  * In a real implementation, this would fetch data from your git scripts
@@ -6,7 +8,7 @@
 function generateMockData() {
   // List of actual Scala 3 (Dotty) contributors for realistic mock data
   const contributors = [
-    'Martin Odersky', 'Hamza Remmal', 'Dale Wijnand', 'noti0na1', 
+    'Martin Odersky', 'Hamza Remmal', 'Dale Wijnand', 'noti0na1',
     'Eugene Flesselle', 'Wojciech Mazur', 'Sébastien Doeraene', 'Matt Bovel',
     'Guillaume Martres', 'Jan Chyb', 'Som Snytt', 'Jamie Thompson',
     'Kacper Korban', 'Nicolas Stucki', 'Tomasz Godzik', 'Adrien Piquerez'
@@ -29,7 +31,7 @@ function generateMockData() {
       // More prominent contributors (lower index) tend to have higher activity
       const baseCommits = Math.max(50, Math.random() * 200 - index * 8);
       const baseLinesChanged = baseCommits * (100 + Math.random() * 500);
-      
+
       return {
         name: name,
         color: generateColor(index), // Assign unique color for visualization
@@ -43,7 +45,7 @@ function generateMockData() {
           const randomVariation = 0.8 + Math.random() * 0.4;
           const commits = Math.floor(baseCommits * commitTrend * randomVariation);
           const linesChanged = Math.floor(commits * (100 + Math.random() * 500));
-          
+
           return {
             time: timePoints[timeIndex],
             commits: Math.max(0, commits), // Ensure non-negative values
@@ -56,7 +58,7 @@ function generateMockData() {
 
   // Sort contributors by total commits (descending)
   data.contributors.sort((a, b) => b.totalCommits - a.totalCommits);
-  
+
   return data;
 }
 
@@ -86,7 +88,7 @@ class ContributorChart {
     this.showCommits = true; // Toggle between commits and lines changed metrics
     this.selectedContributors = new Set(); // Track which contributors are selected for display
     this.timeRange = { start: 0, end: 0 }; // Current time range selection
-    
+
     this.loadData(); // Initialize data loading
   }
 
@@ -95,42 +97,30 @@ class ContributorChart {
    * Handles data format conversion for proper date handling
    */
   async loadData() {
-    try {
-      // Attempt to load real data from contributors_data.json
-      const response = await fetch('contributors_data.json');
-      if (response.ok) {
-        this.data = await response.json();
-        
-        // Convert string dates to Date objects if necessary
-        if (this.data.timePoints && this.data.timePoints.length > 0) {
-          if (typeof this.data.timePoints[0] === 'string') {
-            this.data.timePoints = this.data.timePoints.map(tp => new Date(tp + '-01'));
-          }
-          
-          // Update contributor data time points as well
-          this.data.contributors.forEach(contributor => {
-            contributor.data.forEach((point, index) => {
-              if (typeof point.time === 'string') {
-                point.time = new Date(point.time + '-01');
-              }
-            });
-          });
-        }
-        console.log('Loaded real contributor data');
-      } else {
-        throw new Error('Real data not available');
+    this.data = contributorsData;
+
+    // Convert string dates to Date objects if necessary
+    if (this.data.timePoints && this.data.timePoints.length > 0) {
+      if (typeof this.data.timePoints[0] === 'string') {
+        this.data.timePoints = this.data.timePoints.map(tp => new Date(tp + '-01'));
       }
-    } catch (error) {
-      console.log('Loading mock data:', error.message);
-      this.data = generateMockData(); // Fall back to mock data
+
+      // Update contributor data time points as well
+      this.data.contributors.forEach(contributor => {
+        contributor.data.forEach((point, index) => {
+          if (typeof point.time === 'string') {
+            point.time = new Date(point.time + '-01');
+          }
+        });
+      });
     }
 
     // Initialize time range to show all data
     this.timeRange = { start: 0, end: this.data.timePoints.length - 1 };
-    
+
     // Select top 8 contributors by default for better initial visualization
     this.data.contributors.slice(0, 8).forEach(c => this.selectedContributors.add(c.name));
-    
+
     this.init(); // Initialize UI components
   }
 
@@ -150,7 +140,7 @@ class ContributorChart {
    */
   setupChart() {
     const ctx = document.getElementById('contributorsChart').getContext('2d');
-    
+
     this.chart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -179,15 +169,15 @@ class ContributorChart {
           tooltip: {
             callbacks: {
               // Format tooltip title to show readable date
-              title: function(context) {
+              title: function (context) {
                 const date = new Date(context[0].label);
-                return date.toLocaleDateString('en-US', { 
-                  year: 'numeric', 
-                  month: 'long' 
+                return date.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long'
                 });
               },
               // Format tooltip labels with contributor name and metric
-              label: function(context) {
+              label: function (context) {
                 const contributor = context.dataset.label;
                 const value = context.parsed.y;
                 const metric = context.chart.data.datasets[0].yAxisID === 'commits' ? 'commits' : 'lines changed';
@@ -220,7 +210,7 @@ class ContributorChart {
             },
             ticks: {
               // Format large numbers with thousands separators
-              callback: function(value) {
+              callback: function (value) {
                 return value.toLocaleString();
               }
             }
@@ -261,11 +251,11 @@ class ContributorChart {
     const updateTimeRange = () => {
       const startPercentage = parseFloat(startHandle.style.left.replace('%', ''));
       const endPercentage = parseFloat(endHandle.style.left.replace('%', ''));
-      
+
       // Convert percentages to array indices
       this.timeRange.start = Math.floor((startPercentage / 100) * (this.data.timePoints.length - 1));
       this.timeRange.end = Math.floor((endPercentage / 100) * (this.data.timePoints.length - 1));
-      
+
       this.updateTimeDescription(); // Update display text
       this.updateChart(); // Refresh chart with new time range
     };
@@ -273,11 +263,11 @@ class ContributorChart {
     // Handle mouse movement during drag operations
     const handleMouseMove = (e) => {
       if (!isDragging) return;
-      
+
       const slider = document.querySelector('.slider-wrapper');
       const rect = slider.getBoundingClientRect();
       const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
-      
+
       // Ensure start handle doesn't go past end handle and vice versa
       if (isDragging === 'start') {
         const endPercentage = parseFloat(endHandle.style.left.replace('%', ''));
@@ -343,7 +333,7 @@ class ContributorChart {
    */
   setupContributorsList() {
     const container = document.getElementById('contributorsList');
-    
+
     // Generate HTML for each contributor item
     container.innerHTML = this.data.contributors.map(contributor => {
       const isSelected = this.selectedContributors.has(contributor.name);
@@ -368,7 +358,7 @@ class ContributorChart {
 
       const name = item.dataset.name;
       const checkbox = item.querySelector('.contributor-checkbox');
-      
+
       // Toggle contributor selection
       if (this.selectedContributors.has(name)) {
         this.selectedContributors.delete(name);
@@ -379,7 +369,7 @@ class ContributorChart {
         item.classList.add('active');
         checkbox.checked = true;
       }
-      
+
       this.updateChart(); // Update chart with new selection
     });
   }
@@ -393,10 +383,10 @@ class ContributorChart {
       const name = item.dataset.name;
       const contributor = this.data.contributors.find(c => c.name === name);
       const statsElement = item.querySelector('.contributor-stats');
-      
+
       if (contributor && statsElement) {
         // Update stats text based on current metric selection
-        statsElement.textContent = this.showCommits 
+        statsElement.textContent = this.showCommits
           ? contributor.totalCommits.toLocaleString() + ' commits'
           : contributor.totalLinesChanged.toLocaleString() + ' lines';
       }
@@ -409,11 +399,11 @@ class ContributorChart {
   updateTimeDescription() {
     const startDate = this.data.timePoints[this.timeRange.start];
     const endDate = this.data.timePoints[this.timeRange.end];
-    
+
     const options = { year: 'numeric', month: 'long' };
     const startStr = startDate.toLocaleDateString('en-US', options);
     const endStr = endDate.toLocaleDateString('en-US', options);
-    
+
     // Note: This assumes there's a timeRange element in the DOM
     document.getElementById('timeRange').textContent = `${startStr} - ${endStr}`;
   }
@@ -423,14 +413,14 @@ class ContributorChart {
    */
   updateChart() {
     const filteredData = this.getFilteredData();
-    
+
     // Update chart data
     this.chart.data.labels = filteredData.labels;
     this.chart.data.datasets = filteredData.datasets;
-    
+
     // Update Y-axis title based on current metric
     this.chart.options.scales.y.title.text = this.showCommits ? 'Number of Commits' : 'Lines Changed';
-    
+
     // Update chart without animation for better performance
     this.chart.update('none');
   }
@@ -441,7 +431,7 @@ class ContributorChart {
    */
   getFilteredData() {
     // Filter contributors based on current selection
-    const selectedContributors = this.data.contributors.filter(c => 
+    const selectedContributors = this.data.contributors.filter(c =>
       this.selectedContributors.has(c.name)
     );
 
