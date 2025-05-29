@@ -7,6 +7,7 @@
   <title>Dotty Compiler (Scala3)</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="contributors.css">
+  <link rel="stylesheet" href="issues.css">
 </head>
 
 <body>
@@ -21,7 +22,8 @@
     <button class="tab active" data-tab="overview">Overview</button>
     <button class="tab" data-tab="panel1">Files and Dependencies</button>
     <button class="tab" data-tab="panel2">Contributors</button>
-    <button class="tab" data-tab="panel3">Panel 3</button>
+    <button class="tab" data-tab="panel3">Issues Timeline</button>
+    <button class="tab" data-tab="panel4">Issues Status Over Time</button>
   </div>
 
   <div id="overview" class="tab-content active">
@@ -107,14 +109,149 @@
 
   <div id="panel3" class="tab-content">
     <div class="card">
-      <h2>Visualization Panel 3</h2>
-      <p>Panel 3 content goes here.</p>
+      <h2>GitHub Issues Duration Analysis</h2>
+      <div class="issues-container">
+        <div class="chart-section">
+          <div class="chart-container">
+            <canvas id="issuesHistogram"></canvas>
+          </div>
+          
+          <!-- Issue Type Filter -->
+          <div class="issue-filters">
+            <div class="filter-section">
+              <label>Issue Types:</label>
+              <div class="filter-checkboxes">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="bugFilter" checked>
+                  <span>Bug</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="featureFilter" checked>
+                  <span>Feature Request</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="improvementFilter" checked>
+                  <span>Improvement</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="questionFilter" checked>
+                  <span>Question</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="filter-section">
+              <label for="binSizeSlider">Histogram Bins: <span id="binSizeValue">7</span></label>
+              <input type="range" id="binSizeSlider" min="1" max="60" value="7">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Statistics Panel -->
+        <div class="stats-panel">
+          <div class="stats-section">
+            <h3>Issue Statistics</h3>
+            <div class="stat-item">
+              <span class="stat-label">Total Issues:</span>
+              <span class="stat-value" id="totalIssues">-</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Median Duration:</span>
+              <span class="stat-value" id="medianDuration">-</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Average Duration:</span>
+              <span class="stat-value" id="averageDuration">-</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Longest Open:</span>
+              <span class="stat-value" id="longestDuration">-</span>
+            </div>
+          </div>
+          
+          <div class="stats-section">
+            <h3>Issue Types</h3>
+            <div class="type-distribution" id="typeDistribution">
+              <!-- Will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <script type="module" src="script.js"></script>
+  <div id="panel4" class="tab-content">
+    <div class="card">
+      <h2>Issues Status Over Time</h2>
+      <div class="timeline-container">
+        <div class="chart-section">
+          <div class="chart-container">
+            <canvas id="timelineChart"></canvas>
+          </div>
+          
+          <!-- Timeline Controls -->
+          <div class="timeline-controls">
+            <div class="control-section">
+              <label for="timelineAggregation">Time Period:</label>
+              <select id="timelineAggregation">
+                <option value="month">Monthly</option>
+                <option value="quarter">Quarterly</option>
+                <option value="year">Yearly</option>
+              </select>
+            </div>
+            
+            <div class="control-section">
+              <label class="checkbox-label">
+                <input type="checkbox" id="showTotalIssues" checked>
+                <span>Show Total Issues Count</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Statistics Panel -->
+        <div class="timeline-stats-panel">
+          <div class="stats-section">
+            <h3>Current Status</h3>
+            <div class="stat-item">
+              <span class="stat-label">Total Open:</span>
+              <span class="stat-value" id="currentOpenIssues">-</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Total Closed:</span>
+              <span class="stat-value" id="currentClosedIssues">-</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Open Percentage:</span>
+              <span class="stat-value" id="currentOpenPercentage">-</span>
+            </div>
+          </div>
+          
+          <div class="stats-section">
+            <h3>Trends</h3>
+            <div class="stat-item">
+              <span class="stat-label">Peak Open Issues:</span>
+              <span class="stat-value" id="peakOpenIssues">-</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Average Open Rate:</span>
+              <span class="stat-value" id="averageOpenRate">-</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Issues Created/Closed Ratio:</span>
+              <span class="stat-value" id="createdClosedRatio">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script type="module" src="script.js"></script>
+  <script type="module" src="issues.js"></script>
+  <script type="module" src="timeline.js"></script>
 </body>
 
 </html>

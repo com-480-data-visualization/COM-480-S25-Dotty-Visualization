@@ -34,6 +34,18 @@ document.addEventListener("DOMContentLoaded", () => {
         scalaFileMap.draw();
       } else if (target === "panel2") {
         initializeContributorsChart();
+      } else if (target === "panel3") {
+        if (typeof initializeIssuesChart === 'function') {
+          initializeIssuesChart();
+        }
+      } else if (target === "panel4") {
+        if (window.timelineViz) {
+          window.timelineViz.processTimelineData();
+        } else {
+          if (!window.timelineViz) {
+            window.timelineViz = new TimelineVisualization();
+          }
+        }
       }
     });
   });
