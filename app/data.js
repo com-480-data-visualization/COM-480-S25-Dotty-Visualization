@@ -27,12 +27,18 @@ import ref_3_0_0 from "../data/references/3.0.0.csv"
 
 import contributors from "../data/contributors/contributors_data.json"
 
+import visualizationTimeline from "../data/timeline/visualization_timeline.json"
+
 function transformCSVWithHeaders(rows) {
     const headers = rows[0];
     return rows.slice(1).map(row => Object.fromEntries(row.map((cell, index) => [headers[index], cell])))
 }
 
 export const contributorsData = contributors;
+
+export const timelineData = {
+    visualizationTimeline,
+}
 
 export const references = {
     "3.6.4": transformCSVWithHeaders(ref_3_6_4),

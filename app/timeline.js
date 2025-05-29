@@ -1,26 +1,20 @@
-import timelineData from 'url:./visualization_timeline.json'
+const { timelineData } = require("./data");
 
 // Timeline visualization for issues status over time
-class TimelineVisualization {
+export class TimelineVisualization {
     constructor() {
         this.timelineData = [];
         this.chart = null;
         this.aggregation = 'month';
         this.showTotalIssues = true;
-        
+
         this.initializeEventListeners();
         this.loadData();
     }
 
-    async loadData() {
-        try {
-            const response = await fetch(timelineData);
-            const data = await response.json();
-            this.timelineData = data;
-            this.processTimelineData();
-        } catch (error) {
-            console.error('Error loading timeline data:', error);
-        }
+    loadData() {
+        this.timelineData = timelineData.visualizationTimeline;
+        this.processTimelineData();
     }
 
     initializeEventListeners() {
@@ -50,16 +44,16 @@ class TimelineVisualization {
 
         // Sort data by date
         const sortedData = [...this.timelineData].sort((a, b) => new Date(a.date) - new Date(b.date));
-        
+
         // Track issue states over time
         const issueStates = new Map(); // issue number -> current state
         const timelineMap = new Map(); // date -> {open, closed, totalOpen, totalClosed}
-        
+
         // Process each event
         sortedData.forEach(event => {
             const date = new Date(event.date);
             const periodKey = this.getPeriodKey(date);
-            
+
             if (!timelineMap.has(periodKey)) {
                 timelineMap.set(periodKey, {
                     date: periodKey,
@@ -69,9 +63,9 @@ class TimelineVisualization {
                     totalClosed: 0
                 });
             }
-            
+
             const periodData = timelineMap.get(periodKey);
-            
+
             if (event.type === 'created') {
                 issueStates.set(event.number, 'open');
                 periodData.created++;
@@ -80,24 +74,24 @@ class TimelineVisualization {
                 periodData.closed++;
             }
         });
-        
+
         // Calculate cumulative counts and percentages
         let cumulativeOpen = 0;
         let cumulativeClosed = 0;
-        
+
         const processedData = Array.from(timelineMap.values())
             .sort((a, b) => new Date(a.date) - new Date(b.date))
             .map(period => {
                 cumulativeOpen += period.created - period.closed;
                 cumulativeClosed += period.closed;
-                
+
                 // Ensure we don't have negative open issues
                 if (cumulativeOpen < 0) cumulativeOpen = 0;
-                
+
                 const totalIssues = cumulativeOpen + cumulativeClosed;
                 const openPercentage = totalIssues > 0 ? (cumulativeOpen / totalIssues) * 100 : 0;
                 const closedPercentage = totalIssues > 0 ? (cumulativeClosed / totalIssues) * 100 : 0;
-                
+
                 return {
                     ...period,
                     cumulativeOpen,
@@ -116,7 +110,7 @@ class TimelineVisualization {
     getPeriodKey(date) {
         const year = date.getFullYear();
         const month = date.getMonth();
-        
+
         switch (this.aggregation) {
             case 'month':
                 return `${year}-${String(month + 1).padStart(2, '0')}`;
@@ -239,7 +233,7 @@ class TimelineVisualization {
                     },
                     tooltip: {
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 const label = context.dataset.label || '';
                                 if (label.includes('%')) {
                                     return `${label}: ${context.parsed.y.toFixed(1)}%`;
@@ -263,13 +257,13 @@ class TimelineVisualization {
         const latest = this.aggregatedData[this.aggregatedData.length - 1];
         const totalCreated = this.timelineData.filter(d => d.type === 'created').length;
         const totalClosed = this.timelineData.filter(d => d.type === 'closed').length;
-        
+
         // Calculate peak open issues
         const peakOpen = Math.max(...this.aggregatedData.map(d => d.cumulativeOpen));
-        
+
         // Calculate average open rate
         const avgOpenRate = this.aggregatedData.reduce((sum, d) => sum + d.openPercentage, 0) / this.aggregatedData.length;
-        
+
         // Update DOM elements
         this.updateStatElement('currentOpenIssues', latest.cumulativeOpen);
         this.updateStatElement('currentClosedIssues', latest.cumulativeClosed);
@@ -287,15 +281,12 @@ class TimelineVisualization {
     }
 }
 
+export let timelineViz = null;
+
 // Initialize timeline visualization when the DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Only initialize if we're on the timeline tab or if the timeline elements exist
     if (document.getElementById('timelineChart')) {
-        window.timelineViz = new TimelineVisualization();
+        timelineViz = new TimelineVisualization();
     }
 });
-
-// Export for use in other scripts
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = TimelineVisualization;
-}
