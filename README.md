@@ -11,6 +11,7 @@ Project of Data Visualization (COM-480 S25)
 | Yingtian Tang | 368634 |
 
 Process book: https://github.com/com-480-data-visualization/COM-480-S25-Dotty-Visualization/blob/master/COM_480_report.pdf
+
 Screencast: https://github.com/com-480-data-visualization/COM-480-S25-Dotty-Visualization/releases/download/m3/Dotty.Visualization.mp4
 
 ## Overview
