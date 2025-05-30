@@ -1,57 +1,45 @@
-import timelineData from 'url:./visualization_timeline.json'
+import { timelineData } from "./data";
 
 /**
  * Load real GitHub Issues data from timeline visualization data
  * Processes timeline events to reconstruct issue lifecycles
  * @returns {Promise<Array>} Real issues data with creation, closure times, and metadata
  */
-async function loadRealIssuesData() {
-  try {
-    const response = await fetch(timelineData);
-    if (!response.ok) {
-      throw new Error('Failed to fetch timeline data');
+function loadRealIssuesData() {
+  const timeline = timelineData.visualizationTimeline;
+
+  // Group timeline events by issue number
+  const issueMap = new Map();
+
+  timeline.forEach(event => {
+    const number = event.number;
+    if (!issueMap.has(number)) {
+      issueMap.set(number, {
+        number: number,
+        events: [],
+        labels: new Set()
+      });
     }
 
-    const timeline = await response.json();
-    
-    // Group timeline events by issue number
-    const issueMap = new Map();
-    
-    timeline.forEach(event => {
-      const number = event.number;
-      if (!issueMap.has(number)) {
-        issueMap.set(number, {
-          number: number,
-          events: [],
-          labels: new Set()
-        });
-      }
-      
-      const issue = issueMap.get(number);
-      issue.events.push(event);
-      
-      // Collect all labels that were ever associated with this issue
-      if (event.labels) {
-        event.labels.forEach(label => issue.labels.add(label));
-      }
-    });
+    const issue = issueMap.get(number);
+    issue.events.push(event);
 
-    // Convert to issue objects
-    const allIssues = [];
-    issueMap.forEach((issueData, number) => {
-      const processedIssue = processTimelineIssue(issueData);
-      if (processedIssue) {
-        allIssues.push(processedIssue);
-      }
-    });
+    // Collect all labels that were ever associated with this issue
+    if (event.labels) {
+      event.labels.forEach(label => issue.labels.add(label));
+    }
+  });
 
-    return allIssues.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-    
-  } catch (error) {
-    console.error('Error loading timeline data:', error);
-    // Fallback to mock data if real data fails
-    return generateMockIssuesData();
-  }
+  // Convert to issue objects
+  const allIssues = [];
+  issueMap.forEach((issueData, number) => {
+    const processedIssue = processTimelineIssue(issueData);
+    if (processedIssue) {
+      allIssues.push(processedIssue);
+    }
+  });
+
+  return allIssues.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
 }
 
 /**
@@ -62,11 +50,11 @@ async function loadRealIssuesData() {
  */
 function processTimelineIssue(issueData) {
   const { number, events, labels } = issueData;
-  
+
   // Find creation and closure events
   const createdEvent = events.find(e => e.type === 'created');
   const closedEvent = events.find(e => e.type === 'closed');
-  
+
   if (!createdEvent) {
     // Skip issues without creation event
     return null;
@@ -75,11 +63,11 @@ function processTimelineIssue(issueData) {
   const createdAt = new Date(createdEvent.date);
   const closedAt = closedEvent ? new Date(closedEvent.date) : null;
   const isOpen = !closedAt;
-  
+
   // Calculate duration for closed issues
   let durationHours = null;
   let durationDays = null;
-  
+
   if (closedAt && createdAt) {
     durationHours = (closedAt - createdAt) / (1000 * 60 * 60);
     durationDays = durationHours / 24;
@@ -123,7 +111,7 @@ function determineIssueType(labels) {
     },
     {
       patterns: ['itype:enhancement', 'itype:feature'],
-      type: 'Feature Request', 
+      type: 'Feature Request',
       color: '#28a745'
     },
     {
@@ -146,7 +134,7 @@ function determineIssueType(labels) {
   // Check each type mapping
   for (const mapping of typeMapping) {
     for (const pattern of mapping.patterns) {
-      if (labels.some(label => 
+      if (labels.some(label =>
         typeof label === 'string' && label.toLowerCase().includes(pattern.toLowerCase())
       )) {
         return { type: mapping.type, color: mapping.color };
@@ -164,7 +152,7 @@ function determineIssueType(labels) {
  */
 function generateMockIssuesData() {
   console.warn('Using fallback mock data - real data loading failed');
-  
+
   const issueTypes = [
     { name: 'Bug', weight: 0.4, color: '#FF6B6B' },
     { name: 'Enhancement', weight: 0.3, color: '#4ECDC4' },
@@ -194,7 +182,7 @@ function generateMockIssuesData() {
     }
 
     const issueType = issueTypes[typeIndex];
-    
+
     // 70% chance the issue is closed
     const isClosed = Math.random() < 0.7;
     let closedAt = null;
@@ -240,26 +228,19 @@ let filteredIssuesData = null;
  * Initialize the issues chart
  * Called when panel3 tab is activated
  */
-async function initializeIssuesChart() {
+export function initializeIssuesChart() {
   if (issuesChart) return; // Already initialized
-  
-  try {
-    // Load real issues data
-    issuesData = await loadRealIssuesData();
-    filteredIssuesData = issuesData.slice(); // Start with all data
-    
-    console.log(`Loaded ${issuesData.length} issues from timeline data`);
-    
-    setupIssuesChart();
-    setupIssueFilters();
-    updateIssuesChart();
-    updateIssueStatistics();
-    
-  } catch (error) {
-    console.error('Error initializing issues chart:', error);
-    document.getElementById('issuesHistogram').parentElement.innerHTML = 
-      '<p style="color: red;">Error loading issues data. Please check the console for details.</p>';
-  }
+
+  // Load real issues data
+  issuesData = loadRealIssuesData();
+  filteredIssuesData = issuesData.slice(); // Start with all data
+
+  console.log(`Loaded ${issuesData.length} issues from timeline data`);
+
+  setupIssuesChart();
+  setupIssueFilters();
+  updateIssuesChart();
+  updateIssueStatistics();
 }
 
 /**
@@ -267,7 +248,7 @@ async function initializeIssuesChart() {
  */
 function setupIssuesChart() {
   const ctx = document.getElementById('issuesHistogram').getContext('2d');
-  
+
   issuesChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -289,7 +270,7 @@ function setupIssuesChart() {
           borderColor: 'rgba(255, 255, 255, 0.1)',
           borderWidth: 1,
           callbacks: {
-            title: function(context) {
+            title: function (context) {
               const label = context[0].label;
               if (label.startsWith('>')) {
                 return `Duration: ${label} days`;
@@ -299,7 +280,7 @@ function setupIssuesChart() {
               const binEnd = binStart + binSize;
               return `Duration: ${binStart}-${binEnd} days`;
             },
-            label: function(context) {
+            label: function (context) {
               return `${context.dataset.label}: ${context.parsed.y} issues`;
             }
           }
@@ -315,7 +296,7 @@ function setupIssuesChart() {
           },
           ticks: {
             color: 'var(--text-color)',
-            callback: function(value, index) {
+            callback: function (value, index) {
               return Math.round(parseFloat(this.getLabelForValue(value)));
             }
           },
@@ -363,13 +344,13 @@ function setupIssueFilters() {
       });
     }
   });
-  
+
   // Bin size slider
   const binSizeSlider = document.getElementById('binSizeSlider');
   const binSizeValue = document.getElementById('binSizeValue');
-  
+
   if (binSizeSlider && binSizeValue) {
-    binSizeSlider.addEventListener('input', function() {
+    binSizeSlider.addEventListener('input', function () {
       binSizeValue.textContent = this.value;
       updateIssuesChart();
     });
@@ -386,21 +367,21 @@ function updateFilteredData() {
     improvement: document.getElementById('improvementFilter')?.checked ?? true,
     question: document.getElementById('questionFilter')?.checked ?? true
   };
-  
+
   filteredIssuesData = issuesData.filter(issue => {
     const type = issue.type.toLowerCase();
-    
+
     if (type.includes('bug') && activeFilters.bug) return true;
     if ((type.includes('feature') || type.includes('enhancement')) && activeFilters.feature) return true;
     if (type.includes('improvement') && activeFilters.improvement) return true;
     if (type.includes('question') && activeFilters.question) return true;
-    
+
     // Include 'Other' and 'Documentation' types if any filter is active
-    if ((type.includes('other') || type.includes('documentation')) && 
-        (activeFilters.bug || activeFilters.feature || activeFilters.improvement || activeFilters.question)) {
+    if ((type.includes('other') || type.includes('documentation')) &&
+      (activeFilters.bug || activeFilters.feature || activeFilters.improvement || activeFilters.question)) {
       return true;
     }
-    
+
     return false;
   });
 }
@@ -418,27 +399,27 @@ function getBinSize() {
  */
 function updateIssuesChart() {
   if (!issuesChart || !filteredIssuesData) return;
-  
+
   // Filter only closed issues for duration analysis
   const closedIssues = filteredIssuesData.filter(issue => !issue.isOpen && issue.durationDays !== null);
-  
+
   if (closedIssues.length === 0) {
     issuesChart.data.labels = [];
     issuesChart.data.datasets = [];
     issuesChart.update();
     return;
   }
-  
+
   const binSize = getBinSize();
   const maxDisplayDuration = 365; // Issues > 500 days go into a special bin
-  
+
   // Separate issues into regular bins and long-duration bin
   const regularIssues = closedIssues.filter(issue => issue.durationDays <= maxDisplayDuration);
   const longDurationIssues = closedIssues.filter(issue => issue.durationDays > maxDisplayDuration);
-  
+
   // Calculate number of bins for regular issues
   const numRegularBins = Math.ceil(maxDisplayDuration / binSize);
-  
+
   // Create regular bins
   const bins = Array(numRegularBins).fill(0).map((_, i) => ({
     start: i * binSize,
@@ -447,7 +428,7 @@ function updateIssuesChart() {
     issues: [],
     isLongDuration: false
   }));
-  
+
   // Add special bin for long-duration issues (> 500 days)
   if (longDurationIssues.length > 0) {
     bins.push({
@@ -458,14 +439,14 @@ function updateIssuesChart() {
       isLongDuration: true
     });
   }
-  
+
   // Populate regular bins
   regularIssues.forEach(issue => {
     const binIndex = Math.min(Math.floor(issue.durationDays / binSize), numRegularBins - 1);
     bins[binIndex].count++;
     bins[binIndex].issues.push(issue);
   });
-  
+
   // Create chart data with special labeling for long-duration bin
   const labels = bins.map(bin => {
     if (bin.isLongDuration) {
@@ -474,7 +455,7 @@ function updateIssuesChart() {
     return bin.start.toString();
   });
   const data = bins.map(bin => bin.count);
-  
+
   // Use different colors for regular and long-duration bins
   const backgroundColor = bins.map(bin => {
     if (bin.isLongDuration) {
@@ -482,14 +463,14 @@ function updateIssuesChart() {
     }
     return 'rgba(54, 162, 235, 0.6)'; // Blue for regular
   });
-  
+
   const borderColor = bins.map(bin => {
     if (bin.isLongDuration) {
       return 'rgba(255, 99, 132, 1)'; // Red border
     }
     return 'rgba(54, 162, 235, 1)'; // Blue border
   });
-  
+
   issuesChart.data.labels = labels;
   issuesChart.data.datasets = [{
     label: 'Issues',
@@ -498,7 +479,7 @@ function updateIssuesChart() {
     borderColor: borderColor,
     borderWidth: 1
   }];
-  
+
   issuesChart.update();
 }
 
@@ -507,16 +488,16 @@ function updateIssuesChart() {
  */
 function updateIssueStatistics() {
   if (!filteredIssuesData) return;
-  
+
   const totalIssues = filteredIssuesData.length;
   const closedIssues = filteredIssuesData.filter(issue => !issue.isOpen && issue.durationDays !== null);
-  
+
   // Update total issues
   const totalElement = document.getElementById('totalIssues');
   if (totalElement) {
     totalElement.textContent = totalIssues.toLocaleString();
   }
-  
+
   if (closedIssues.length === 0) {
     // Clear statistics if no closed issues
     ['medianDuration', 'averageDuration', 'longestDuration'].forEach(id => {
@@ -525,33 +506,33 @@ function updateIssueStatistics() {
     });
     return;
   }
-  
+
   // Calculate statistics
   const durations = closedIssues.map(issue => issue.durationDays).sort((a, b) => a - b);
-  
-  const median = durations.length % 2 === 0 
+
+  const median = durations.length % 2 === 0
     ? (durations[durations.length / 2 - 1] + durations[durations.length / 2]) / 2
     : durations[Math.floor(durations.length / 2)];
-  
+
   const average = durations.reduce((sum, d) => sum + d, 0) / durations.length;
   const longest = Math.max(...durations);
-  
+
   // Update statistics display
   const medianElement = document.getElementById('medianDuration');
   if (medianElement) {
     medianElement.textContent = `${median.toFixed(1)} days`;
   }
-  
+
   const averageElement = document.getElementById('averageDuration');
   if (averageElement) {
     averageElement.textContent = `${average.toFixed(1)} days`;
   }
-  
+
   const longestElement = document.getElementById('longestDuration');
   if (longestElement) {
     longestElement.textContent = `${longest.toFixed(1)} days`;
   }
-  
+
   // Update type distribution
   updateTypeDistribution();
 }
@@ -562,21 +543,21 @@ function updateIssueStatistics() {
 function updateTypeDistribution() {
   const typeDistElement = document.getElementById('typeDistribution');
   if (!typeDistElement || !filteredIssuesData) return;
-  
+
   // Count issues by type
   const typeCounts = {};
   filteredIssuesData.forEach(issue => {
     const type = issue.type;
     typeCounts[type] = (typeCounts[type] || 0) + 1;
   });
-  
+
   // Create distribution display
   typeDistElement.innerHTML = '';
   Object.entries(typeCounts)
     .sort((a, b) => b[1] - a[1]) // Sort by count descending
     .forEach(([type, count]) => {
       const percentage = ((count / filteredIssuesData.length) * 100).toFixed(1);
-      
+
       const typeItem = document.createElement('div');
       typeItem.className = 'type-item';
       typeItem.innerHTML = `
@@ -585,10 +566,7 @@ function updateTypeDistribution() {
           <span class="type-count">${count} (${percentage}%)</span>
         </div>
       `;
-      
+
       typeDistElement.appendChild(typeItem);
     });
 }
-
-// Export the initialization function
-window.initializeIssuesChart = initializeIssuesChart;

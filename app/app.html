@@ -68,7 +68,7 @@
           <div class="chart-container">
             <canvas id="contributorsChart"></canvas>
           </div>
-          
+
           <!-- Time Range Slider -->
           <div class="time-slider-container">
             <div class="time-slider-wrapper">
@@ -81,7 +81,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Contributors Panel -->
         <div class="contributors-panel">
           <div class="metric-toggle">
@@ -93,12 +93,12 @@
               <span id="currentMetric">Commits</span>
             </span>
           </div>
-          
+
           <div class="contributor-controls">
             <button class="control-btn" id="selectAllBtn">Select All</button>
             <button class="control-btn" id="deselectAllBtn">Deselect All</button>
           </div>
-          
+
           <div class="contributors-list" id="contributorsList">
             <!-- Contributors will be populated by JavaScript -->
           </div>
@@ -115,7 +115,7 @@
           <div class="chart-container">
             <canvas id="issuesHistogram"></canvas>
           </div>
-          
+
           <!-- Issue Type Filter -->
           <div class="issue-filters">
             <div class="filter-section">
@@ -139,14 +139,14 @@
                 </label>
               </div>
             </div>
-            
+
             <div class="filter-section">
               <label for="binSizeSlider">Histogram Bins: <span id="binSizeValue">7</span></label>
               <input type="range" id="binSizeSlider" min="1" max="60" value="7">
             </div>
           </div>
         </div>
-        
+
         <!-- Statistics Panel -->
         <div class="stats-panel">
           <div class="stats-section">
@@ -168,7 +168,7 @@
               <span class="stat-value" id="longestDuration">-</span>
             </div>
           </div>
-          
+
           <div class="stats-section">
             <h3>Issue Types</h3>
             <div class="type-distribution" id="typeDistribution">
@@ -188,7 +188,7 @@
           <div class="chart-container">
             <canvas id="timelineChart"></canvas>
           </div>
-          
+
           <!-- Timeline Controls -->
           <div class="timeline-controls">
             <div class="control-section">
@@ -199,7 +199,7 @@
                 <option value="year">Yearly</option>
               </select>
             </div>
-            
+
             <div class="control-section">
               <label class="checkbox-label">
                 <input type="checkbox" id="showTotalIssues" checked>
@@ -208,7 +208,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Statistics Panel -->
         <div class="timeline-stats-panel">
           <div class="stats-section">
@@ -226,7 +226,7 @@
               <span class="stat-value" id="currentOpenPercentage">-</span>
             </div>
           </div>
-          
+
           <div class="stats-section">
             <h3>Trends</h3>
             <div class="stat-item">
@@ -250,8 +250,6 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script type="module" src="script.js"></script>
-  <script type="module" src="issues.js"></script>
-  <script type="module" src="timeline.js"></script>
 </body>
 
 </html>
