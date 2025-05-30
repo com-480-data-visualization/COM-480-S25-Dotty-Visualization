@@ -1,5 +1,7 @@
 # Dotty (Scala 3) Compiler Visualization Report
 
+**Website is live at https://com-480-data-visualization.github.io/COM-480-S25-Dotty-Visualization/**
+
 Project of Data Visualization (COM-480 S25)
 
 | Student's name | SCIPER |
