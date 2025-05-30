@@ -2,8 +2,8 @@
   "name": "app",
   "version": "1.0.0",
   "scripts": {
-    "dev": "parcel app.html --dist-dir out",
-    "build": "parcel build app.html --dist-dir out",
+    "dev": "parcel index.html --dist-dir out",
+    "build": "parcel build index.html --dist-dir out",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
