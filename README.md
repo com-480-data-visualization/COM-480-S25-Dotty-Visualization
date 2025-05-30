@@ -10,6 +10,9 @@ Project of Data Visualization (COM-480 S25)
 | Yaoyu Zhao | 319801 |
 | Yingtian Tang | 368634 |
 
+Process book: https://github.com/com-480-data-visualization/COM-480-S25-Dotty-Visualization/blob/master/COM_480_report.pdf
+Screencast: https://github.com/com-480-data-visualization/COM-480-S25-Dotty-Visualization/releases/download/m3/Dotty.Visualization.mp4
+
 ## Overview
 
 This project aims to visualize the code structure, development progress, and maintenance status of the Dotty (Scala 3) compiler (https://github.com/scala/scala3). Dotty is the next-generation compiler for the Scala programming language, used by a wide range of developers—from large enterprises and academic institutions to individual hobbyists.
@@ -26,7 +29,7 @@ Our goal is to create an interactive, navigable visualization of the project’s
 ![Screenshot 4](4.png)
 ![Screenshot 5](5.png)
 
-## Running the web application
+## Running the web application locally
 
 It requires npm and parcel to run the web application. Once node.js is installed, you can install the dependencies and deploy using the following commands:
 
